@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: dashboard-proxy
+  name: dashboard-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dashboard-proxy
+  template:
+    metadata:
+      labels:
+        app: dashboard-proxy
+    spec:
+      containers:
+      - args:
+        - --cookie-secure=false
+        - --provider=github
+        - --upstream=http://{{ template "kubernetes-dashboard.fullname" . }}.kube-system.svc.cluster.local
+        - --http-address=0.0.0.0:8080
+        - --redirect-url=https://{{ .Values.endpoint }}/oauth2/callback
+        - --email-domain=*
+        - --github-org={{ .Values.githubProxy.githubOrganization }}
+        - --pass-basic-auth={{ .Values.githubProxy.passBasicAuth }}
+        - --pass-access-token={{ .Values.githubProxy.passAccessToken }}
+        env:
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          value: {{ .Values.githubProxy.cookieSecret }}
+        - name: OAUTH2_PROXY_CLIENT_ID
+          value: {{ .Values.githubProxy.githubAuthClientId }}
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          value: {{ .Values.githubProxy.githubAuthSecret }}
+        image: {{ .Values.githubProxy.image }}
+        name: oauth-proxy
+        ports:
+        - containerPort: 8080
+          protocol: TCP

@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nexus-pwd-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: password
+        image: fuchicorp/buildtools
+        command: 
+        - "/bin/bash"
+        args:
+        - "-c"
+        - cd && bash nexuspass.sh http://{{ .Values.service.name }} {{ .Values.password.current }} {{ .Values.password.new }}
+        volumeMounts:
+        - name: passwordcm
+          mountPath: "/root"
+      restartPolicy: OnFailure
+      volumes:
+      - name: passwordcm
+        configMap:
+          name: nexus-pwd-cm
+  backoffLimit: 2
+  activeDeadlineSeconds: 360

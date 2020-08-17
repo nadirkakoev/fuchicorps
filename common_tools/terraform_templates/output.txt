@@ -1,0 +1,48 @@
+================================================================
+Hello, Congrats, You were able to configure and deploy all common tools.
+Please use bellow information to access to your applicaions. 
+
+Author: Farkhod Sadykov sadykovfarkhod@gmail.com
+             
+######################## Jenkins ########################
+URL: https://jenkins.${deployment_endpoint}
+Username: ${jenkins_username}
+Password: ${jenkins_password}
+##########################################################
+                       
+###################### Grafana ######################
+URL: https://grafana.${deployment_endpoint}
+Username: ${grafana_username}
+Password: ${grafana_password}
+##########################################################
+                       
+####################### Vault ############################
+URL: https://vault.${deployment_endpoint}
+##########################################################
+
+####################### Nexus ############################
+URL: https://nexus.${deployment_endpoint}
+URL: https://docker.${deployment_endpoint}
+Username: ${nexus_username}
+Password: ${nexus_password}
+##########################################################
+
+####################### Prometheus ############################
+URL: https://prometheus.${deployment_endpoint}
+##########################################################
+===============================================================
+
+################# Kubernetes Dashboard ########################
+URL: https://dashboard.${deployment_endpoint}
+##########################################################
+===============================================================
+
+################# Spinnaker Dashboard ########################
+URL: https://spinnaker.${deployment_endpoint}
+##########################################################
+===============================================================
+
+####################### Sonarqube ############################
+URL: https://sonarqube.${deployment_endpoint}
+##########################################################
+===============================================================

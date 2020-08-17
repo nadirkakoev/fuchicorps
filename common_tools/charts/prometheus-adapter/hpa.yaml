@@ -1,0 +1,38 @@
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nginx
+spec:
+  maxReplicas: 10
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: nginx
+  metrics:
+  - type: Pods
+    pods:
+      metricName: memory_max_usage
+      targetAverageValue: 10000000m
+
+# ---
+# apiVersion: autoscaling/v2beta1
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: kuard-autoscaler
+#   namespace: default
+# spec:
+#   scaleTargetRef:
+#     apiVersion: extensions/v1beta1
+#     kind: Deployment
+#     name: kuard
+#   minReplicas: 3
+#   maxReplicas: 10
+#   metrics:
+#   - type: Object
+#     object:
+#       target:
+#         kind: Service
+#         name: kuard
+#       metricName: cpu_usage_seconds_total
+#       targetValue: 100
